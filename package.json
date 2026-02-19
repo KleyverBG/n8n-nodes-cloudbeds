@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-cloudbeds",
-	"version": "0.3.5",
+	"version": "0.3.6",
 	"description": "Nodo de n8n para integrar con Cloudbeds PMS - Sistema de gestión hotelera | Desarrollado por Calma Celesti",
 	"license": "MIT",
 	"homepage": "https://calmacelesti.mx",
