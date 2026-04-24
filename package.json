@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-cloudbeds",
-	"version": "0.3.16",
+	"version": "0.3.17",
 	"description": "Nodo de n8n para integrar con Cloudbeds PMS - Sistema de gestión hotelera | Desarrollado por Calma Celesti",
 	"license": "MIT",
 	"homepage": "https://calmacelesti.mx",
@@ -21,7 +21,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/<...>/n8n-nodes-cloudbeds.git"
+		"url": "git+https://github.com/KleyverBenitez-AutomatizaiconIsep/n8n-nodes-cloudbeds.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
