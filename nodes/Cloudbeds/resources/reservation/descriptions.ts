@@ -411,7 +411,6 @@ export const reservationFields: INodeProperties[] = [
 		displayName: 'Reservation Room ID',
 		name: 'reservationRoomId',
 		type: 'string',
-		required: true,
 		displayOptions: {
 			show: {
 				resource: ['reservation'],
@@ -419,10 +418,11 @@ export const reservationFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The reservation room ID to assign (from unassigned[0].reservationRoomID in the reservation data)',
+		placeholder: 'e.g. 671015-0',
+		description: 'The ID of the currently assigned room. Only required when unassigning — leave empty for a first-time room assignment.',
 	},
 	{
-		displayName: 'Room ID',
+		displayName: 'Room ID (New)',
 		name: 'roomId',
 		type: 'string',
 		displayOptions: {
@@ -432,7 +432,8 @@ export const reservationFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the room to assign (leave empty to unassign)',
+		placeholder: 'e.g. 671015-1',
+		description: 'The ID of the room to assign to the reservation',
 	},
 	// Update Status
 	{
