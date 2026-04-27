@@ -55,6 +55,22 @@ export const roomOperations: INodeProperties[] = [
 
 export const roomFields: INodeProperties[] = [
 	// Get Available, Block/Unblock
+	// Get Unassigned - optional filter
+	{
+		displayName: 'Room Type ID',
+		name: 'roomTypeId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['room'],
+				operation: ['getUnassigned'],
+			},
+		},
+		default: '',
+		placeholder: '671015',
+		description: 'Filter results by room type ID (e.g. 671015). Leave empty to get all unassigned rooms.',
+	},
+	// Get Available, Block/Unblock
 	{
 		displayName: 'Start Date',
 		name: 'startDate',

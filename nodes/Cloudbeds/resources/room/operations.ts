@@ -11,9 +11,20 @@ export async function getRoomTypes(this: IExecuteFunctions, _index: number) {
 	return await cloudbedsApiRequest.call(this, 'GET', '/getRoomTypes');
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function getUnassigned(this: IExecuteFunctions, _index: number) {
-	return await cloudbedsApiRequest.call(this, 'GET', '/getRoomsUnassigned');
+export async function getUnassigned(this: IExecuteFunctions, index: number) {
+	const roomTypeId = this.getNodeParameter('roomTypeId', index, '') as string;
+
+	const response = await cloudbedsApiRequest.call(this, 'GET', '/getRoomsUnassigned');
+
+	if (roomTypeId) {
+		const data = Array.isArray(response?.data) ? response.data : [];
+		return {
+			...response,
+			data: data.filter((room: IDataObject) => String(room.roomTypeID) === String(roomTypeId)),
+		};
+	}
+
+	return response;
 }
 
 export async function getAvailable(this: IExecuteFunctions, index: number) {
