@@ -17,10 +17,15 @@ export async function getUnassigned(this: IExecuteFunctions, index: number) {
 	const response = await cloudbedsApiRequest.call(this, 'GET', '/getRoomsUnassigned');
 
 	if (roomTypeId) {
-		const data = Array.isArray(response?.data) ? response.data : [];
+		const properties = Array.isArray(response?.data) ? response.data : [];
 		return {
 			...response,
-			data: data.filter((room: IDataObject) => String(room.roomTypeID) === String(roomTypeId)),
+			data: properties.map((property: IDataObject) => ({
+				...property,
+				rooms: (Array.isArray(property.rooms) ? property.rooms : []).filter(
+					(room: IDataObject) => String(room.roomTypeID) === String(roomTypeId),
+				),
+			})),
 		};
 	}
 
