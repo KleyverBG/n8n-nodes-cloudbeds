@@ -435,6 +435,20 @@ export const reservationFields: INodeProperties[] = [
 		placeholder: 'e.g. 671015-1',
 		description: 'The ID of the room to assign to the reservation',
 	},
+	{
+		displayName: 'Room Type ID',
+		name: 'roomTypeId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['reservation'],
+				operation: ['updateRoom'],
+			},
+		},
+		default: '',
+		placeholder: 'e.g. 671015',
+		description: 'The room type ID. Required by the Cloudbeds API when assigning a room.',
+	},
 	// Update Status
 	{
 		displayName: 'Reservation ID',

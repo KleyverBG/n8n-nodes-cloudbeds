@@ -126,6 +126,7 @@ export async function updateRoom(this: IExecuteFunctions, index: number) {
 	const reservationId = this.getNodeParameter('reservationId', index) as string;
 	const reservationRoomId = this.getNodeParameter('reservationRoomId', index, '') as string;
 	const roomId = this.getNodeParameter('roomId', index) as string;
+	const roomTypeId = this.getNodeParameter('roomTypeId', index, '') as string;
 
 	const body: IDataObject = {
 		reservationID: reservationId,
@@ -134,6 +135,10 @@ export async function updateRoom(this: IExecuteFunctions, index: number) {
 
 	if (reservationRoomId) {
 		body.reservationRoomID = reservationRoomId;
+	}
+
+	if (roomTypeId) {
+		body.roomTypeID = roomTypeId;
 	}
 
 	return await cloudbedsApiRequest.call(
