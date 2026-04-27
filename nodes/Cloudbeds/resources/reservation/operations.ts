@@ -18,10 +18,19 @@ export async function create(this: IExecuteFunctions, index: number) {
 
 	// Format dates to YYYY-MM-DD
 	const formatDate = (dateStr: string) => {
+		if (!dateStr) return '';
+		// If already in YYYY-MM-DD format, return as-is
+		if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+			return dateStr;
+		}
 		const date = new Date(dateStr);
+		if (isNaN(date.getTime())) {
+			return dateStr.split('T')[0];
+		}
 		return date.toISOString().split('T')[0];
 	};
 
+	// Build form data - Cloudbeds requires specific array format
 	const body: IDataObject = {
 		startDate: formatDate(startDate),
 		endDate: formatDate(endDate),
@@ -31,12 +40,16 @@ export async function create(this: IExecuteFunctions, index: number) {
 		guestCountry,
 		guestZip,
 		paymentMethod,
-		// Arrays for rooms configuration
-		'rooms[0][roomTypeID]': roomTypeId,
-		'rooms[0][quantity]': roomQuantity,
-		'adults[0]': adults,
-		'children[0]': children,
 	};
+
+	// Add room configuration as separate parameters (Cloudbeds form-urlencoded format)
+	// Each room, adults, and children entry must specify the roomTypeID
+	body['rooms[0][roomTypeID]'] = String(roomTypeId);
+	body['rooms[0][quantity]'] = String(roomQuantity);
+	body['adults[0][roomTypeID]'] = String(roomTypeId);
+	body['adults[0][quantity]'] = String(adults);
+	body['children[0][roomTypeID]'] = String(roomTypeId);
+	body['children[0][quantity]'] = String(children);
 
 	// Add optional fields
 	if (additionalFields.guestPhone) {
@@ -83,11 +96,11 @@ export async function getAll(this: IExecuteFunctions, index: number) {
 	const qs: IDataObject = {};
 
 	if (additionalFields.checkinDateFrom) {
-		qs.checkInFrom = additionalFields.checkinDateFrom;
+		qs.checkInFrom = (additionalFields.checkinDateFrom as string).substring(0, 10);
 	}
 
 	if (additionalFields.checkinDateTo) {
-		qs.checkInTo = additionalFields.checkinDateTo;
+		qs.checkInTo = (additionalFields.checkinDateTo as string).substring(0, 10);
 	}
 
 	if (additionalFields.status) {
@@ -111,17 +124,31 @@ export async function getAll(this: IExecuteFunctions, index: number) {
 
 export async function updateRoom(this: IExecuteFunctions, index: number) {
 	const reservationId = this.getNodeParameter('reservationId', index) as string;
+	const reservationRoomId = this.getNodeParameter('reservationRoomId', index) as string;
 	const roomId = this.getNodeParameter('roomId', index) as string;
 
 	const body: IDataObject = {
 		reservationID: reservationId,
-		roomID: roomId,
+		reservationRoomID: reservationRoomId,
+		newRoomID: roomId,
 	};
 
 	return await cloudbedsApiRequest.call(
 		this,
-		'PUT',
-		'/putReservationRoom',
+		'POST',
+		'/postRoomAssign',
 		body,
 	);
+}
+
+export async function updateStatus(this: IExecuteFunctions, index: number) {
+	const reservationId = this.getNodeParameter('reservationId', index) as string;
+	const status = this.getNodeParameter('status', index) as string;
+
+	const body: IDataObject = {
+		reservationID: reservationId,
+		status,
+	};
+
+	return await cloudbedsApiRequest.call(this, 'PUT', '/putReservation', body);
 }

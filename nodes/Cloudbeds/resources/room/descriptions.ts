@@ -39,7 +39,7 @@ export const roomOperations: INodeProperties[] = [
 			{
 				name: 'Get Unassigned',
 				value: 'getUnassigned',
-				description: 'Get unassigned rooms for a date range',
+				description: 'Get all rooms that currently have no reservation assigned',
 				action: 'Get unassigned rooms',
 			},
 			{
@@ -54,7 +54,7 @@ export const roomOperations: INodeProperties[] = [
 ];
 
 export const roomFields: INodeProperties[] = [
-	// Get Unassigned and Get Available
+	// Get Available, Block/Unblock
 	{
 		displayName: 'Start Date',
 		name: 'startDate',
@@ -63,7 +63,7 @@ export const roomFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['room'],
-				operation: ['getUnassigned', 'getAvailable', 'blockRoom', 'unblockRoom'],
+				operation: ['getAvailable', 'blockRoom', 'unblockRoom'],
 			},
 		},
 		default: '',
@@ -77,7 +77,7 @@ export const roomFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['room'],
-				operation: ['getUnassigned', 'getAvailable', 'blockRoom', 'unblockRoom'],
+				operation: ['getAvailable', 'blockRoom', 'unblockRoom'],
 			},
 		},
 		default: '',

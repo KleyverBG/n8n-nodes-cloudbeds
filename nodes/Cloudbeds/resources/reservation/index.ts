@@ -16,6 +16,8 @@ export async function execute(this: IExecuteFunctions, operation: string, index:
 			return await operations.getAll.call(this, index);
 		case 'updateRoom':
 			return await operations.updateRoom.call(this, index);
+		case 'updateStatus':
+			return await operations.updateStatus.call(this, index);
 		default:
 			throw new Error(`Unknown operation: ${operation}`);
 	}

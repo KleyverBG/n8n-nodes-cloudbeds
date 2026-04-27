@@ -57,7 +57,7 @@ export const addonFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The ID of the addon to add',
+		description: 'The addon product ID (productId from Get Many addons)',
 	},
 	{
 		displayName: 'Quantity',
@@ -72,22 +72,5 @@ export const addonFields: INodeProperties[] = [
 		},
 		default: 1,
 		description: 'Quantity of addons to add',
-	},
-	{
-		displayName: 'Amount',
-		name: 'amount',
-		type: 'number',
-		required: true,
-		typeOptions: {
-			numberPrecision: 2,
-		},
-		displayOptions: {
-			show: {
-				resource: ['addon'],
-				operation: ['addToReservation'],
-			},
-		},
-		default: 0,
-		description: 'Amount per addon',
 	},
 ];

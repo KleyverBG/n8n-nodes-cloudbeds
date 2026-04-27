@@ -61,7 +61,7 @@ export const paymentFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		description: 'The reservation ID to associate the payment with',
+		description: 'The reservation ID (confirmation number) to associate the payment with',
 	},
 	{
 		displayName: 'Additional Fields',

@@ -14,9 +14,10 @@ export async function createPayByLink(this: IExecuteFunctions, index: number) {
 
 	const body: IDataObject = {
 		paid: amount,
+		propertyId: propertyId,
 		inventoryObject: {
-			propertyId: propertyId,
-			folio_id: parseInt(reservationId, 10),
+			type: 'confirmation_number',
+			id: reservationId,
 		},
 	};
 

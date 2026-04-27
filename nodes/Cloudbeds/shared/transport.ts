@@ -20,9 +20,15 @@ export async function cloudbedsApiRequest(
 
 	const headers: IDataObject = {};
 
-	// Only set Content-Type for non-GET methods
+	// Endpoints that require form-urlencoded (per Cloudbeds API docs)
+	const formEncodedEndpoints = ['/postReservation', '/putReservation', '/postPayment', '/postItem', '/postWebhook', '/postRoomAssign'];
+	const useFormEncoded = formEncodedEndpoints.some(ep => endpoint === ep);
+
+	// Set Content-Type for non-GET methods
 	if (method !== 'GET') {
-		headers['Content-Type'] = 'application/json';
+		headers['Content-Type'] = useFormEncoded 
+			? 'application/x-www-form-urlencoded' 
+			: 'application/json';
 	}
 
 	// Add X-Property-ID header for endpoints that require it
@@ -39,7 +45,7 @@ export async function cloudbedsApiRequest(
 		qs,
 		url: `${baseUrl}${endpoint}`,
 		headers,
-		json: true,
+		json: !useFormEncoded,
 	};
 
 	if (Object.keys(body).length === 0) {

@@ -48,41 +48,42 @@ Este nodo soporta dos métodos de autenticación:
 ### 📅 Reservation (Reservas)
 | Operación | Descripción |
 |-----------|-------------|
+| Create | Crear nueva reserva |
 | Get | Obtener una reserva por ID |
 | Get Many | Listar reservas con filtros |
-| Create | Crear nueva reserva |
-| Update | Actualizar reserva |
-| Cancel | Cancelar reserva |
+| Update Room | Actualizar la asignación de habitación |
+| Update Status | Cambiar el estado de la reserva |
 
 ### 👤 Guest (Huéspedes)
 | Operación | Descripción |
 |-----------|-------------|
+| Create | Crear nuevo huésped |
 | Get | Obtener huésped por ID |
 | Get Many | Listar huéspedes |
-| Create | Crear nuevo huésped |
+| Search | Buscar huéspedes |
 | Update | Actualizar huésped |
 
 ### 🛏️ Room (Habitaciones)
 | Operación | Descripción |
 |-----------|-------------|
+| Block Room | Bloquear una habitación en un rango de fechas |
+| Get Available | Obtener tipos de habitación disponibles |
 | Get Many | Listar habitaciones |
-| Get Availability | Ver disponibilidad |
-| Update Status | Cambiar estado |
-| Assign to Reservation | Asignar a reserva |
-| Unassign from Reservation | Desasignar de reserva |
+| Get Room Types | Obtener tipos de habitación |
+| Get Unassigned | Obtener habitaciones no asignadas |
+| Unblock Room | Desbloquear una habitación |
 
 ### 🏨 Property (Propiedad)
 | Operación | Descripción |
 |-----------|-------------|
-| Get | Obtener info de propiedad |
-| Get Many | Listar propiedades |
+| Get System Info | Obtener versiones de componentes del sistema |
 
 ### 🧹 Housekeeping (Limpieza)
 | Operación | Descripción |
 |-----------|-------------|
 | Get Status | Ver estado de limpieza |
-| Update Status | Actualizar estado |
 | Get Assignments | Ver asignaciones |
+| Update Room Condition | Actualizar condición de la habitación |
 
 ### ➕ Addon (Extras)
 | Operación | Descripción |
@@ -93,35 +94,66 @@ Este nodo soporta dos métodos de autenticación:
 ### 📦 Item (Inventario)
 | Operación | Descripción |
 |-----------|-------------|
+| Add to Reservation | Agregar item a una reserva |
+| Get | Obtener item por ID |
+| Get Categories | Obtener categorías de items |
 | Get Many | Listar artículos |
-| Adjust | Ajustar cantidad |
 
 ### 📅 Event (Eventos)
 | Operación | Descripción |
 |-----------|-------------|
 | Create | Crear evento |
+| Delete | Eliminar evento |
+| Get | Obtener evento por ID |
+| Get Many | Listar eventos |
+| Update | Actualizar evento |
 
 ### 🔐 Door Lock (Cerraduras)
 | Operación | Descripción |
 |-----------|-------------|
 | Create Key | Crear llave digital |
-| Get Keys | Listar llaves |
-| Update Key | Actualizar llave |
 | Delete Key | Eliminar llave |
-| Delete Multiple Keys | Eliminar múltiples llaves |
-| Get Settings | Obtener configuración |
-| Upsert Settings | Crear/actualizar config |
+| Delete Keys (Batch) | Eliminar múltiples llaves |
 | Delete Settings | Eliminar configuración |
+| Get Keys | Listar llaves |
+| Get Settings | Obtener configuración |
+| Update Key | Actualizar llave |
+| Upsert Settings | Crear/actualizar config |
 
 ### 📊 Market Segmentation
 | Operación | Descripción |
 |-----------|-------------|
-| Get Many | Listar segmentos |
+| Create Group / Segment | Crear grupos y segmentos |
+| Get Group / Groups | Consultar grupos |
+| Get Segment / Segments | Consultar segmentos |
+| Get Segment Reservations | Obtener reservas ligadas a un segmento |
+| Update Group / Segment | Actualizar grupos y segmentos |
+| Delete Group / Segment | Eliminar grupos y segmentos |
+| Enable / Disable Group / Segment | Activar o desactivar grupos y segmentos |
+| Set Default Segment | Marcar un segmento por defecto |
 
 ### 🔗 Integration Event
 | Operación | Descripción |
 |-----------|-------------|
 | Create | Crear evento de integración |
+| Get Many | Listar eventos de integración |
+| Retry | Reintentar evento fallido |
+| Update | Actualizar evento de integración |
+
+### 💳 Payment
+| Operación | Descripción |
+|-----------|-------------|
+| Create Pay By Link | Generar link de pago para una reserva |
+| Get Pay By Link | Consultar un link de pago existente |
+
+### 🪝 Webhook
+| Operación | Descripción |
+|-----------|-------------|
+| Create | Crear suscripciones de webhook en Cloudbeds |
+| Get Many | Listar suscripciones existentes |
+| Delete | Eliminar una suscripción por ID |
+
+El recurso Webhook permite seleccionar varios eventos en una sola ejecución. El nodo crea una suscripción independiente por cada evento seleccionado.
 
 ## Ejemplo de Uso
 
@@ -138,6 +170,14 @@ Este nodo soporta dos métodos de autenticación:
 Webhook → Cloudbeds (Get Reservation) → Cloudbeds (Assign Room) → Email
 ```
 
+### Registrar webhooks de Cloudbeds
+
+1. Agrega el nodo Cloudbeds
+2. Selecciona recurso: Webhook
+3. Selecciona operación: Create
+4. Elige uno o varios eventos
+5. Ingresa la URL de tu endpoint de n8n
+
 ## Compatibilidad
 
 - **n8n versión**: 1.0.0 o superior
@@ -145,7 +185,7 @@ Webhook → Cloudbeds (Get Reservation) → Cloudbeds (Assign Room) → Email
 
 ## Documentación
 
-- [Documentación de la API de Cloudbeds](https://hotels.cloudbeds.com/api/docs/)
+- [Documentación de la API de Cloudbeds](https://developers.cloudbeds.com/reference)
 - [Documentación de n8n](https://docs.n8n.io/)
 
 ## Autor

@@ -17,6 +17,7 @@ import * as doorLock from './resources/doorLock';
 import * as integrationEvent from './resources/integrationEvent';
 import * as guest from './resources/guest';
 import * as payment from './resources/payment';
+import * as webhook from './resources/webhook';
 
 export class Cloudbeds implements INodeType {
 	description: INodeTypeDescription = {
@@ -136,6 +137,11 @@ export class Cloudbeds implements INodeType {
 						value: 'room',
 						description: 'Gestionar habitaciones',
 					},
+					{
+						name: 'Webhook',
+						value: 'webhook',
+						description: 'Gestionar suscripciones a webhooks (notificaciones de eventos)',
+					},
 				],
 				default: 'reservation',
 			},
@@ -151,13 +157,24 @@ export class Cloudbeds implements INodeType {
 			...property.descriptions,
 			...reservation.descriptions,
 			...room.descriptions,
+			...webhook.descriptions,
 		],
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
-		const resource = this.getNodeParameter('resource', 0);
-		const operation = this.getNodeParameter('operation', 0);
+		const resource = this.getNodeParameter('resource', 0) as string;
+		let operation: string;
+
+		try {
+			operation = this.getNodeParameter('operation', 0) as string;
+		} catch (error) {
+			if (resource === 'webhook') {
+				operation = 'create';
+			} else {
+				throw error;
+			}
+		}
 
 		let responseData;
 		const returnData: INodeExecutionData[] = [];
@@ -188,6 +205,8 @@ export class Cloudbeds implements INodeType {
 					responseData = await integrationEvent.execute.call(this, operation, i);
 				} else if (resource === 'guest') {
 					responseData = await guest.execute.call(this, operation, i);
+				} else if (resource === 'webhook') {
+					responseData = await webhook.execute.call(this, operation, i);
 				}
 
 				const executionData = this.helpers.constructExecutionMetaData(

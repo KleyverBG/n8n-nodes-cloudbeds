@@ -11,16 +11,9 @@ export async function getRoomTypes(this: IExecuteFunctions, _index: number) {
 	return await cloudbedsApiRequest.call(this, 'GET', '/getRoomTypes');
 }
 
-export async function getUnassigned(this: IExecuteFunctions, index: number) {
-	const startDate = this.getNodeParameter('startDate', index) as string;
-	const endDate = this.getNodeParameter('endDate', index) as string;
-
-	const qs: IDataObject = {
-		startDate,
-		endDate,
-	};
-
-	return await cloudbedsApiRequest.call(this, 'GET', '/getUnassignedRooms', {}, qs);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getUnassigned(this: IExecuteFunctions, _index: number) {
+	return await cloudbedsApiRequest.call(this, 'GET', '/getRoomsUnassigned');
 }
 
 export async function getAvailable(this: IExecuteFunctions, index: number) {

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía: Crear Reservaciones y Pay By Link - Cloudbeds n8n</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.5;
+            font-size: 13px;
+            padding: 20px 30px;
+        }
+        h1 {
+            color: #1a5f7a;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 5px;
+            border-bottom: 2px solid #1a5f7a;
+            padding-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #1a5f7a;
+            font-size: 16px;
+            margin: 20px 0 8px 0;
+            padding: 6px 10px;
+            background: #e8f4f8;
+            border-left: 4px solid #1a5f7a;
+        }
+        h3 {
+            color: #1a5f7a;
+            font-size: 13px;
+            margin: 12px 0 6px 0;
+        }
+        p { margin: 6px 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0 15px 0;
+            font-size: 12px;
+        }
+        th {
+            background: #1a5f7a;
+            color: white;
+            padding: 6px 8px;
+            text-align: left;
+            font-size: 11px;
+        }
+        td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        tr:nth-child(even) { background: #f8f9fa; }
+        code {
+            background: #f0f0f0;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-family: Consolas, monospace;
+            font-size: 11px;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: Consolas, monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            margin: 8px 0;
+        }
+        .tip {
+            background: #d4edda;
+            border-left: 3px solid #28a745;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 3px solid #ffc107;
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .flow {
+            background: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .flow span {
+            background: #1a5f7a;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 0 3px;
+            display: inline-block;
+        }
+        footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 11px;
+        }
+        @media print {
+            body { padding: 10px; font-size: 11px; }
+            h1 { font-size: 18px; }
+            h2 { font-size: 14px; margin: 15px 0 6px 0; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>🏨 Crear Reservaciones y Pay By Link</h1>
+<p class="subtitle">Guía para automatizar reservaciones con Cloudbeds en n8n | v0.3.1</p>
+
+<h2>📅 Reservation → Create</h2>
+<p><strong>Recurso:</strong> <code>reservation</code> | <strong>Operación:</strong> <code>create</code></p>
+<p>Crea una nueva reservación en Cloudbeds con todos los datos del huésped, fechas y tipo de habitación.</p>
+
+<h3>Parámetros Requeridos</h3>
+<table>
+    <tr><th>Campo</th><th>Tipo</th><th>Ejemplo</th><th>Descripción</th></tr>
+    <tr><td><code>startDate</code></td><td>Fecha</td><td>2026-03-01</td><td>Fecha de check-in</td></tr>
+    <tr><td><code>endDate</code></td><td>Fecha</td><td>2026-03-05</td><td>Fecha de check-out</td></tr>
+    <tr><td><code>guestFirstName</code></td><td>Texto</td><td>Juan</td><td>Nombre del huésped</td></tr>
+    <tr><td><code>guestLastName</code></td><td>Texto</td><td>Pérez</td><td>Apellido del huésped</td></tr>
+    <tr><td><code>guestEmail</code></td><td>Email</td><td>juan@email.com</td><td>Correo electrónico</td></tr>
+    <tr><td><code>guestPhone</code></td><td>Texto</td><td>+52 998 123 4567</td><td>Teléfono del huésped</td></tr>
+    <tr><td><code>guestCountry</code></td><td>ISO 2</td><td>MX</td><td>Código país (MX, US, ES...)</td></tr>
+    <tr><td><code>guestZip</code></td><td>Texto</td><td>77500</td><td>Código postal</td></tr>
+    <tr><td><code>roomTypeId</code></td><td>Texto</td><td>12345</td><td>ID del tipo de habitación</td></tr>
+    <tr><td><code>roomQuantity</code></td><td>Número</td><td>1</td><td>Cantidad de habitaciones</td></tr>
+    <tr><td><code>adults</code></td><td>Número</td><td>2</td><td>Número de adultos</td></tr>
+    <tr><td><code>children</code></td><td>Número</td><td>0</td><td>Número de niños</td></tr>
+    <tr><td><code>paymentMethod</code></td><td>Selección</td><td>cash</td><td>cash, credit, ebanking, pay_pal</td></tr>
+</table>
+
+<h3>Parámetros Opcionales (Additional Fields)</h3>
+<table>
+    <tr><th>Campo</th><th>Tipo</th><th>Descripción</th></tr>
+    <tr><td><code>guestGender</code></td><td>M/F/N/A</td><td>Género del huésped</td></tr>
+    <tr><td><code>sourceID</code></td><td>Texto</td><td>ID de fuente (Booking, Expedia, etc.)</td></tr>
+    <tr><td><code>thirdPartyIdentifier</code></td><td>Texto</td><td>Identificador del canal de reserva</td></tr>
+    <tr><td><code>estimatedArrivalTime</code></td><td>Texto</td><td>Hora estimada de llegada (14:00)</td></tr>
+    <tr><td><code>promoCode</code></td><td>Texto</td><td>Código promocional</td></tr>
+    <tr><td><code>sendEmailConfirmation</code></td><td>Boolean</td><td>Enviar email de confirmación (default: true)</td></tr>
+</table>
+
+<h3>Respuesta</h3>
+<div class="code-block">{ "success": true, "reservationID": "RES-123456", "status": "confirmed", "guestName": "Juan Pérez", "total": 4500.00 }</div>
+
+<div class="tip">💡 <strong>Tip:</strong> Usa primero <code>Room → Get Room Types</code> para obtener los IDs de tipos de habitación.</div>
+
+<h2>💳 Payment → Create Pay By Link</h2>
+<p><strong>Recurso:</strong> <code>payment</code> | <strong>Operación:</strong> <code>createPayByLink</code></p>
+<p>Genera un URL de pago que redirige al cliente a <strong>Stripe</strong> (o el procesador configurado en tu cuenta Cloudbeds).</p>
+
+<h3>Parámetros Requeridos</h3>
+<table>
+    <tr><th>Campo</th><th>Tipo</th><th>Ejemplo</th><th>Descripción</th></tr>
+    <tr><td><code>amount</code></td><td>Número</td><td>4500.00</td><td>Monto a cobrar - usar <code>{{ $json.total }}</code> del nodo anterior</td></tr>
+    <tr><td><code>reservationId</code></td><td>Texto</td><td>RES-123456</td><td>Usar <code>{{ $json.reservationID }}</code> del nodo anterior</td></tr>
+</table>
+
+<div class="tip">💡 <strong>¿Por qué especificar amount?</strong> Permite flexibilidad: cobrar el total, un depósito (ej: 50%), o pagos parciales. Usa <code>{{ $json.total }}</code> para obtener automáticamente el total de la reservación recién creada.</div>
+
+<h3>Parámetros Opcionales (Additional Fields)</h3>
+<table>
+    <tr><th>Campo</th><th>Tipo</th><th>Default</th><th>Descripción</th></tr>
+    <tr><td><code>description</code></td><td>Texto</td><td>-</td><td>Descripción del pago</td></tr>
+    <tr><td><code>expiresAfter</code></td><td>Número</td><td>7</td><td>Días hasta que expire (0-30)</td></tr>
+    <tr><td><code>authPayment</code></td><td>Boolean</td><td>false</td><td>Solo autorizar sin capturar</td></tr>
+</table>
+
+<h3>Respuesta</h3>
+<div class="code-block">{ "success": true, "paymentLinkId": "pbl_abc123", "url": "https://pay.cloudbeds.com/link/abc123", "amount": 4500.00 }</div>
+
+<div class="warning">⚠️ <strong>Procesador de pagos:</strong> El link redirige a Stripe (o tu procesador configurado). El Property ID debe estar en las credenciales.</div>
+
+<h2>🔄 Flujo Completo</h2>
+<div class="flow">
+    <span>1. Room → getAvailable</span> →
+    <span>2. Reservation → create</span> →
+    <span>3. Payment → createPayByLink (amount: $json.total)</span> →
+    <span>4. Cliente paga en Stripe</span>
+</div>
+
+<div class="tip">💡 <strong>En n8n:</strong> Al crear el Pay By Link, usa expresiones para obtener datos del nodo anterior:<br>
+• Amount: <code>{{ $json.total }}</code><br>
+• Reservation ID: <code>{{ $json.reservationID }}</code></div>
+
+<h2>🤖 Prompt para Agente IA</h2>
+<div class="code-block">Eres un asistente de reservaciones del hotel. Tienes acceso a herramientas de Cloudbeds.
+
+HERRAMIENTAS:
+• Room → getAvailable: Verifica disponibilidad (startDate, endDate, adults, rooms)
+• Room → getRoomTypes: Lista tipos de habitación con precios
+• Reservation → create: Crea reservación (devuelve reservationID y total)
+• Payment → createPayByLink: Genera link de Stripe (amount del total anterior, reservationId)
+
+FLUJO:
+1. Pregunta fechas y número de huéspedes
+2. Verifica disponibilidad con getAvailable
+3. Presenta opciones de habitación
+4. Solicita datos: nombre, email, teléfono, país, código postal
+5. Crea la reservación (guarda el total y reservationID de la respuesta)
+6. Genera el link de pago usando el total de la reservación
+7. Envía el link de Stripe al cliente
+
+REGLAS:
+- Siempre verifica disponibilidad ANTES de prometer habitaciones
+- Confirma todos los datos antes de crear la reservación
+- El amount del Pay By Link debe ser el total de la reservación creada
+- Responde siempre en español, amable y profesionalmente</div>
+
+<h2>💬 Ejemplo de Conversación</h2>
+<div class="code-block"><strong>Cliente:</strong> Hola, quiero reservar del 15 al 18 de marzo para 2 adultos
+
+<strong>Agente:</strong> [Usa: Room → getAvailable]
+¡Tenemos disponibilidad! Te ofrezco:
+• Suite Deluxe: $2,400/noche (total: $7,200)
+• Habitación Estándar: $1,500/noche (total: $4,500)
+
+<strong>Cliente:</strong> La estándar
+
+<strong>Agente:</strong> Para completar necesito: nombre, email, teléfono, país y código postal
+
+<strong>Cliente:</strong> Juan Pérez, juan@email.com, +52 998 123 4567, México, 77500
+
+<strong>Agente:</strong> [Usa: Reservation → create → obtiene total: 4500]
+[Usa: Payment → createPayByLink con amount: 4500]
+
+✅ Reservación #RES-789012 confirmada
+📅 15-18 marzo 2026 | 🛏️ Estándar | 👥 2 adultos | 💰 $4,500 MXN
+
+💳 Paga seguro con Stripe aquí:
+🔗 https://pay.cloudbeds.com/link/xyz123
+El link expira en 7 días.</div>
+
+<footer>
+    <strong>n8n-nodes-cloudbeds v0.3.1</strong> | Desarrollado por Calma Celesti | Automatización Hotelera Inteligente
+</footer>
+
+</body>
+</html>
