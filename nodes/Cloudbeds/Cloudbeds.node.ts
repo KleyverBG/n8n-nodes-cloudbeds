@@ -5,6 +5,7 @@ import type {
 	INodeTypeDescription,
 } from 'n8n-workflow';
 
+import * as rate from './resources/rate';
 import * as reservation from './resources/reservation';
 import * as property from './resources/property';
 import * as room from './resources/room';
@@ -128,6 +129,11 @@ export class Cloudbeds implements INodeType {
 						description: 'Gestionar propiedades',
 					},
 					{
+						name: 'Rate',
+						value: 'rate',
+						description: 'Consultar y actualizar tarifas de habitaciones',
+					},
+					{
 						name: 'Reservation',
 						value: 'reservation',
 						description: 'Gestionar reservas y check-in/out',
@@ -155,6 +161,7 @@ export class Cloudbeds implements INodeType {
 			...marketSegmentation.descriptions,
 			...payment.descriptions,
 			...property.descriptions,
+			...rate.descriptions,
 			...reservation.descriptions,
 			...room.descriptions,
 			...webhook.descriptions,
@@ -205,6 +212,8 @@ export class Cloudbeds implements INodeType {
 					responseData = await integrationEvent.execute.call(this, operation, i);
 				} else if (resource === 'guest') {
 					responseData = await guest.execute.call(this, operation, i);
+				} else if (resource === 'rate') {
+					responseData = await rate.execute.call(this, operation, i);
 				} else if (resource === 'webhook') {
 					responseData = await webhook.execute.call(this, operation, i);
 				}

@@ -21,7 +21,7 @@ export async function cloudbedsApiRequest(
 	const headers: IDataObject = {};
 
 	// Endpoints that require form-urlencoded (per Cloudbeds API docs)
-	const formEncodedEndpoints = ['/postReservation', '/putReservation', '/postPayment', '/postItem', '/postWebhook', '/postRoomAssign'];
+	const formEncodedEndpoints = ['/postReservation', '/putReservation', '/postPayment', '/postItem', '/postWebhook', '/postRoomAssign', '/putRoomRate', '/putReservationRoomRate'];
 	const useFormEncoded = formEncodedEndpoints.some(ep => endpoint === ep);
 
 	// Set Content-Type for non-GET methods
