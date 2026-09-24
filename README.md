@@ -203,7 +203,7 @@ Webhook → Cloudbeds (Get Reservation) → Cloudbeds (Assign Room) → Email
 
 - 🌐 Web: [calmacelesti.mx](https://calmacelesti.mx)
 - 📧 Email: direccion@calmacelesti.mx
-- 💻 GitHub: [@KleyverBenitez-AutomatizaiconIsep](https://github.com/KleyverBenitez-AutomatizaiconIsep)
+- 💻 GitHub: [@KleyverBG](https://github.com/KleyverBG)
 
 ## Licencia
 
@@ -215,4 +215,4 @@ Las contribuciones son bienvenidas. Por favor, abre un issue o pull request en e
 
 ---
 
-**¿Problemas o sugerencias?** Abre un [issue en GitHub](https://github.com/KleyverBenitez-AutomatizaiconIsep/n8n-nodes-cloudbeds/issues)
+**¿Problemas o sugerencias?** Abre un [issue en GitHub](https://github.com/KleyverBG/n8n-nodes-cloudbeds/issues)

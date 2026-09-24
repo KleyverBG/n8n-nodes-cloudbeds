@@ -21,7 +21,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/KleyverBenitez-AutomatizaiconIsep/n8n-nodes-cloudbeds.git"
+		"url": "git+https://github.com/KleyverBG/n8n-nodes-cloudbeds.git"
 	},
 	"scripts": {
 		"build": "n8n-node build",
