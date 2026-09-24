@@ -197,12 +197,9 @@ Webhook → Cloudbeds (Get Reservation) → Cloudbeds (Assign Room) → Email
 
 ## Autor
 
-**Kleyver Benitez - Calma Celesti**
+**Kleyver Benitez**
 
-🌙 **Calma Celesti** - Automatización Hotelera Inteligente
-
-- 🌐 Web: [calmacelesti.mx](https://calmacelesti.mx)
-- 📧 Email: direccion@calmacelesti.mx
+- 📧 Email: kleyverm.benitez.es@gmail.com
 - 💻 GitHub: [@KleyverBG](https://github.com/KleyverBG)
 
 ## Licencia
