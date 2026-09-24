@@ -19,19 +19,19 @@ export const rateOperations: INodeProperties[] = [
 				action: 'Get many rates',
 			},
 			{
+				name: 'Get Rate Plans',
+				value: 'getRatePlans',
+				description: 'Get available rate plans with their rate IDs and room type IDs',
+				action: 'Get rate plans',
+			},
+			{
 				name: 'Update Rate',
 				value: 'update',
 				description: 'Update the rate of a room type for a date range',
 				action: 'Update a rate',
 			},
-			{
-				name: 'Update Reservation Rate',
-				value: 'updateReservationRate',
-				description: 'Update the rate of a room within an existing reservation',
-				action: 'Update a reservation rate',
-			},
 		],
-		default: 'getAll',
+		default: 'getRatePlans',
 	},
 ];
 
@@ -47,7 +47,7 @@ export const rateFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['getAll', 'update', 'updateReservationRate'],
+				operation: ['getAll', 'update', 'getRatePlans'],
 			},
 		},
 		default: '',
@@ -61,12 +61,15 @@ export const rateFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['getAll', 'update', 'updateReservationRate'],
+				operation: ['getAll', 'update', 'getRatePlans'],
 			},
 		},
 		default: '',
 		description: 'End date for the rate query or update (YYYY-MM-DD)',
 	},
+	// ----------------------------------------
+	// getRatePlans
+	// ----------------------------------------
 	{
 		displayName: 'Room Type ID',
 		name: 'roomTypeId',
@@ -74,7 +77,7 @@ export const rateFields: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['getAll'],
+				operation: ['getAll', 'getRatePlans'],
 			},
 		},
 		default: '',
@@ -85,8 +88,8 @@ export const rateFields: INodeProperties[] = [
 	// update
 	// ----------------------------------------
 	{
-		displayName: 'Room Type ID',
-		name: 'roomTypeId',
+		displayName: 'Rate Plan ID',
+		name: 'rateId',
 		type: 'string',
 		required: true,
 		displayOptions: {
@@ -96,82 +99,104 @@ export const rateFields: INodeProperties[] = [
 			},
 		},
 		default: '',
-		placeholder: 'e.g. 671015',
-		description: 'The ID of the room type whose rate will be updated',
+		description: 'The ID of the rate plan to update. Obtain it from the Get Rate Plans operation.',
 	},
 	{
-		displayName: 'Price',
-		name: 'price',
+		displayName: 'Sunday Price',
+		name: 'sunPrice',
 		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['update', 'updateReservationRate'],
+				operation: ['update'],
 			},
 		},
 		default: 0,
-		description: 'The new price to set',
+		description: 'Price to apply on Sundays within the date range',
 	},
 	{
-		displayName: 'Additional Fields',
-		name: 'additionalFields',
-		type: 'collection',
-		placeholder: 'Add Field',
+		displayName: 'Monday Price',
+		name: 'monPrice',
+		type: 'number',
+		required: true,
 		displayOptions: {
 			show: {
 				resource: ['rate'],
 				operation: ['update'],
 			},
 		},
-		default: {},
-		options: [
-			{
-				displayName: 'Apply To All Rate Plans',
-				name: 'applyToAllRatePlans',
-				type: 'boolean',
-				default: false,
-				description: 'Whether to apply the price change to all rate plans of the room type',
-			},
-			{
-				displayName: 'Rate Plan ID',
-				name: 'ratePlanID',
-				type: 'string',
-				default: '',
-				description: 'The ID of the specific rate plan to update. Leave empty to update the default rate.',
-			},
-		],
+		default: 0,
+		description: 'Price to apply on Mondays within the date range',
 	},
-	// ----------------------------------------
-	// updateReservationRate
-	// ----------------------------------------
 	{
-		displayName: 'Reservation ID',
-		name: 'reservationId',
-		type: 'string',
+		displayName: 'Tuesday Price',
+		name: 'tuePrice',
+		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['updateReservationRate'],
+				operation: ['update'],
 			},
 		},
-		default: '',
-		description: 'The ID of the reservation',
+		default: 0,
+		description: 'Price to apply on Tuesdays within the date range',
 	},
 	{
-		displayName: 'Reservation Room ID',
-		name: 'reservationRoomId',
-		type: 'string',
+		displayName: 'Wednesday Price',
+		name: 'wedPrice',
+		type: 'number',
 		required: true,
 		displayOptions: {
 			show: {
 				resource: ['rate'],
-				operation: ['updateReservationRate'],
+				operation: ['update'],
 			},
 		},
-		default: '',
-		placeholder: 'e.g. 671015-0',
-		description: 'The ID of the room within the reservation',
+		default: 0,
+		description: 'Price to apply on Wednesdays within the date range',
+	},
+	{
+		displayName: 'Thursday Price',
+		name: 'thuPrice',
+		type: 'number',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['rate'],
+				operation: ['update'],
+			},
+		},
+		default: 0,
+		description: 'Price to apply on Thursdays within the date range',
+	},
+	{
+		displayName: 'Friday Price',
+		name: 'friPrice',
+		type: 'number',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['rate'],
+				operation: ['update'],
+			},
+		},
+		default: 0,
+		description: 'Price to apply on Fridays within the date range',
+	},
+	{
+		displayName: 'Saturday Price',
+		name: 'satPrice',
+		type: 'number',
+		required: true,
+		displayOptions: {
+			show: {
+				resource: ['rate'],
+				operation: ['update'],
+			},
+		},
+		default: 0,
+		description: 'Price to apply on Saturdays within the date range',
 	},
 ];

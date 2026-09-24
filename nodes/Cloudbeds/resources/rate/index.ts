@@ -10,10 +10,10 @@ export async function execute(this: IExecuteFunctions, operation: string, index:
 	switch (operation) {
 		case 'getAll':
 			return await operations.getAll.call(this, index);
+		case 'getRatePlans':
+			return await operations.getRatePlans.call(this, index);
 		case 'update':
 			return await operations.update.call(this, index);
-		case 'updateReservationRate':
-			return await operations.updateReservationRate.call(this, index);
 		default:
 			throw new Error(`Unknown operation: ${operation}`);
 	}

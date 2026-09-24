@@ -146,6 +146,13 @@ Este nodo soporta dos métodos de autenticación:
 | Create Pay By Link | Generar link de pago para una reserva |
 | Get Pay By Link | Consultar un link de pago existente |
 
+### 💲 Rate (Tarifas)
+| Operación | Descripción |
+|-----------|-------------|
+| Get Many | Obtener tarifas por rango de fechas y tipo de habitación |
+| Get Rate Plans | Listar planes de tarifa |
+| Update Rate | Actualizar el precio de una tarifa por día de la semana |
+
 ### 🪝 Webhook
 | Operación | Descripción |
 |-----------|-------------|
