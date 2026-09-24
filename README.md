@@ -212,4 +212,4 @@ Las contribuciones son bienvenidas. Por favor, abre un issue o pull request en e
 
 ---
 
-**¿Problemas o sugerencias?** Abre un [issue en GitHub](https://github.com/KleyverBG/n8n-nodes-cloudbeds/issues)
+**¿Problemas o sugerencias?** Abre un [issue en GitHub](https://github.com/KleyverBG/n8n-nodes-cloudbeds/issues).
